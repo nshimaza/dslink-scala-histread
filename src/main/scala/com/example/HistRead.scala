@@ -3,7 +3,7 @@
  * Copyright (c) 2019 Cisco and/or its affiliates.
  *
  * This software is licensed to you under the terms of the Cisco Sample
- * Code License, Version 1.0 (the "License"). You may obtain a copy of the
+ * Code License, Version 1.1 (the "License"). You may obtain a copy of the
  * License at
  *
  *                https://developer.cisco.com/docs/licenses
@@ -18,17 +18,16 @@
 
 package com.example
 
-import java.time.format.{DateTimeFormatter}
 import java.time._
+import java.time.format.DateTimeFormatter
 
-import org.json4s._
-import org.json4s.JsonDSL._
-import org.json4s.native.JsonMethods._
 import org.dsa.iot.dslink.node.Permission
 import org.dsa.iot.dslink.node.actions.table.Row
 import org.dsa.iot.dslink.node.actions.{Action, ActionResult, Parameter}
 import org.dsa.iot.dslink.node.value.{Value, ValueType}
 import org.dsa.iot.dslink.{DSLink, DSLinkFactory, DSLinkHandler}
+import org.json4s.JsonDSL._
+import org.json4s.native.JsonMethods._
 import org.slf4j.LoggerFactory
 
 import scala.sys.process._
