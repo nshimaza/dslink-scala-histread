@@ -1,0 +1,46 @@
+{
+  "name": "dslink-scala-histread",
+  "version": "0.1",
+  "description": "Invoke uahistoryread",
+  "license": "Cisco Sample Code License",
+  "author": {
+    "name": "Naoto Shimazaki",
+    "email": "nshimaza@cisco.com"
+  },
+  "main": "bin/dslink-scala-histread",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nshimaza/dslink-scala-histread"
+  },
+  "bugs": {
+    "url": "https://github.com/nshimaza/dslink-scala-histread/issues"
+  },
+  "configs": {
+    "name": {
+      "type": "string",
+      "default": "HistRead"
+    },
+    "broker": {
+      "type": "url"
+    },
+    "token": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "path",
+      "default": "nodes.json"
+    },
+    "key": {
+      "type": "path",
+      "default": ".key"
+    },
+    "log": {
+      "type": "enum",
+      "default": "info"
+    },
+    "handler_class": {
+      "type": "string",
+      "default": "com.example.HistReadDSLinkHandler"
+    }
+  }
+}
