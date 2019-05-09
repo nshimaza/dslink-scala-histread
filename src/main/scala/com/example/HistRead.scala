@@ -34,12 +34,12 @@ import scala.sys.process._
 
 object HistRead {
   def main(args: Array[String]): Unit = {
-    DSLinkFactory.start(args, new HistReadDSLinkHandler())
+    DSLinkFactory.start(args.drop(1), new HistReadDSLinkHandler(args(0)))
   }
 }
 
 
-class HistReadDSLinkHandler() extends DSLinkHandler {
+class HistReadDSLinkHandler(histReadCmd: String) extends DSLinkHandler {
   private val log = LoggerFactory.getLogger(getClass)
   override val isResponder = true
 
@@ -51,13 +51,12 @@ class HistReadDSLinkHandler() extends DSLinkHandler {
       .setAction(new Action(Permission.READ, (event: ActionResult) => {
         val url = event.getParameter("URL").getString
         val path = event.getParameter("Path").getString
-        val outFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd hh:mm:ss")
-        val start = OffsetDateTime.parse(event.getParameter("Start").getString)
-          .withOffsetSameInstant(ZoneOffset.UTC).format(outFormatter)
-        val end = OffsetDateTime.parse(event.getParameter("End").getString)
-          .withOffsetSameInstant(ZoneOffset.UTC).format(outFormatter)
-
-        val cmd = Seq("./bin/uahistoryread", "-l", "0", "-u", url, "-p", path, "--starttime", start, "--endtime", end)
+        val outFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
+        val start = ZonedDateTime.of(LocalDateTime.parse(event.getParameter("Start").getString), ZoneId.systemDefault)
+          .withZoneSameInstant(ZoneId.of("Z")).format(outFormatter)
+        val end = ZonedDateTime.of(LocalDateTime.parse(event.getParameter("End").getString), ZoneId.systemDefault)
+          .withZoneSameInstant(ZoneId.of("Z")).format(outFormatter)
+        val cmd = Seq(histReadCmd, "-l", "0", "-u", url, "-p", path, "--starttime", start, "--endtime", end)
         val splitLines = augmentString(cmd.!!).lines.toList.drop(3).map(_.split(" +"))
         val inFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss[.SSSSSS]").withZone(ZoneId.of("Z"))
         val json = splitLines.map { a =>

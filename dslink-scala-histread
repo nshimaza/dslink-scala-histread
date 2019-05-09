@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -jar lib/dslink-scala-histread-assembly-0.1.0-SNAPSHOT.jar uahistoryread $@
